@@ -5,12 +5,24 @@ import (
 	"math"
 )
 
-func calculateY(alpha float64) float64 {
-	return math.Cos(alpha) + math.Sin(alpha) + math.Cos(3*alpha) + math.Sin(3*alpha)
+type Calculate interface {
+	Formula() float64
 }
 
-func calculateZ(alpha float64) float64 {
-	return 2 * math.Sqrt(2) * math.Cos(alpha) * math.Sin(math.Pi/4+2*alpha)
+type Y struct {
+	alf float64
+}
+
+type Z struct {
+	alf float64
+}
+
+func (y *Y) Formula() float64 {
+	return math.Cos(y.alf) + math.Sin(y.alf) + math.Cos(3*y.alf) + math.Sin(3*y.alf)
+}
+
+func (z *Z) Formula() float64 {
+	return 2 * math.Sqrt(2) * math.Cos(z.alf) * math.Sin(math.Pi/4+2*z.alf)
 }
 
 func main() {
@@ -22,11 +34,14 @@ func main() {
 		return
 	}
 
-	y := calculateY(alpha)
-	z := calculateZ(alpha)
-	diff := y - z
+	var calcY Calculate = &Y{alf: alpha}
+	var calcZ Calculate = &Z{alf: alpha}
 
-	fmt.Printf("y = %f\n", y)
-	fmt.Printf("z = %f\n", z)
-	fmt.Printf("Разность (y - z) = %g\n", diff)
+	yVal := calcY.Formula()
+	zVal := calcZ.Formula()
+	diff := yVal - zVal
+
+	fmt.Printf("Y = %f\n", yVal)
+	fmt.Printf("Z = %f\n", zVal)
+	fmt.Printf("Разность (Y - Z) = %g\n", diff)
 }
