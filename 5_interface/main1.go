@@ -1,3 +1,6 @@
+//go:build formula
+// +build formula
+
 package main
 
 import (
