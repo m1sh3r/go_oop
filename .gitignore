@@ -15,6 +15,7 @@
 *.out
 go.work
 .idea
+.gocache*
 cmake-build-*/
 *.iws
 out/
